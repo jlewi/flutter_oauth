@@ -1,0 +1,23 @@
+<!-- 
+  This static page handles the redirect from the OAuth2 server.
+  It is used to get the authorization code from the OAuth2 server 
+  and then forward it to the flutter app.
+
+  See: https://pub.dev/packages/oauth2_client#web
+-->
+<html>
+<head>
+    <title>OAuth 2.0 Redirect Page</title>
+</head>
+<body>
+    <h1>OAuth 2.0 Redirect Page</h1>    
+    <script type="text/javascript">
+        window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if(code) {
+          window.opener.postMessage(window.location.href, _url_of_the_opener_window_);
+        }
+      }
+    </script>
+</html>

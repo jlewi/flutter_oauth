@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// N.B. its a shame I ended up prefixing the package name with git_
+// maybe clean it up later.
+import 'package:git_flutter_oauth/gcp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -107,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             TextButton(
               onPressed: () {
+                Oauth2ClientExample().fetchFiles();
                 _setText("Button clicked");
               },
               child: const Text('AccessAPIs'),

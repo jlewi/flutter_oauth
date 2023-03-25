@@ -9,11 +9,15 @@ class Oauth2ClientExample {
   Future<void> fetchFiles() async {
     var hlp = OAuth2Helper(
       GoogleOAuth2Client(
-          redirectUri: 'com.teranet.app:/oauth2redirect',
-          customUriScheme: 'com.teranet.app'),
+          redirectUri: 'http://localhost:8080/oauth2redirect',
+          // customUriScheme appears to be a required field even though we
+          // aren't overriding it for our web app.
+          customUriScheme: 'http'),
       grantType: OAuth2Helper.authorizationCode,
-      clientId: 'XXX-XXX-XXX',
-      clientSecret: 'XXX-XXX-XXX',
+      clientId:
+          '197678265256-7em2vm2pd0lmtikhkpnhhhqpdfu3prid.apps.googleusercontent.com',
+      // N.B. clientSecret shouldn't be needed
+      //clientSecret: 'XXX-XXX-XXX',
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     );
 
