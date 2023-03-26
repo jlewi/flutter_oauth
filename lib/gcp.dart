@@ -1,12 +1,19 @@
 // ignore_for_file: avoid_print
 
+import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/google_oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
+import 'package:googleapis/bigquery/v2.dart' as bq;
+import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:googleapis_auth/src/auth_http_utils.dart' as utils;
+// TODO(jeremy): Is this the right package to import? Or is there
+// a version that is platform agnostic?
+import 'package:http/http.dart' as http;
 
 class Oauth2ClientExample {
   Oauth2ClientExample();
 
-  Future<void> fetchFiles() async {
+  Future<String> fetchTables() async {
     var hlp = OAuth2Helper(
       GoogleOAuth2Client(
           // TODO(jeremy): How do we use different redirect URIs for different
@@ -21,13 +28,41 @@ class Oauth2ClientExample {
       // We need to provide a client secret but impersonation doesn't actually
       // rely on that being kept confidential.
       clientSecret: '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',
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      scopes: [bq.BigqueryApi.bigqueryScope],
+      // Per: https://developers.google.com/identity/protocols/oauth2/web-server#offline
+      // We need to request offline access in order to get a refresh token.
+      authCodeParams: {
+        'access_type': 'offline',
+      },
     );
 
-    // TODO(jeremy): I should rewrite this to illustrate how to inject the
-    // credential into GCP client libraries.
-    var resp = await hlp.get('https://www.googleapis.com/drive/v3/files');
+    // Refresh token should be populated if one was requested.
+    AccessTokenResponse? token = await hlp.getToken();
 
-    print(resp.body);
+    DateTime expiry = token!.expirationDate!;
+    auth.AccessToken accessToken =
+        auth.AccessToken('Bearer', token!.accessToken!, expiry.toUtc());
+
+    String? refreshToken;
+    if (token.refreshToken != null && token.refreshToken! != "") {
+      refreshToken = token.refreshToken;
+    }
+
+    if (refreshToken == null) {
+      print("No refresh token found");
+    }
+
+    auth.AccessCredentials credentials = new auth.AccessCredentials(
+        accessToken, token!.refreshToken, token.scope!);
+
+    http.Client client = new http.Client();
+    auth.ClientId clientId = auth.ClientId(hlp.clientId, hlp.clientSecret);
+    auth.AuthClient? gcpClient =
+        utils.AutoRefreshingClient(client, clientId, credentials);
+    bq.BigqueryApi bqApi = bq.BigqueryApi(gcpClient!);
+
+    bq.TableList table = await bqApi.tables.list('githubarchive', 'month');
+
+    return "Got ${table.tables!.length} tables";
   }
 }

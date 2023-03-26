@@ -110,8 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             TextButton(
               onPressed: () {
-                Oauth2ClientExample().fetchFiles();
-                _setText("Button clicked");
+                Oauth2ClientExample().fetchTables().then((value) {
+                  _setText(value);
+                });
               },
               child: const Text('AccessAPIs'),
             ),
