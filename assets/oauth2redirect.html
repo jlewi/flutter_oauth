@@ -16,7 +16,17 @@
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         if(code) {
-          window.opener.postMessage(window.location.href, "http://localhost:8080/assets/oauth2redirect.html");
+          // see: https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+          // The message is the full URL of the redirect page. The URL will contain query arguments
+          // with the authorization code and state and we want to pass those to the flutter app.
+          message = window.location.href
+          // URL will be the URL of the redirect page without the query arguments.
+          // We use this as the targetOrigin for the postMessage call because the redirect URI
+          // should be the same origin as main window since they are being served on the same origin.
+          // The redirect URI includes the path e.g. "assets/oauth2redirect.html" but that appears
+          // to be ignored by the postMessage call.
+          url = window.location.href.split('?')[0];
+          window.opener.postMessage(message, url);
         }
       }
     </script>

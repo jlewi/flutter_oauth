@@ -50,10 +50,9 @@ package maybe suitable when using Google just to signin to your app (i.e. OIDC).
 
 ## Incorporating Into Your Application 
 
-The redirect URL is hardcoded in two places
+The redirect URL is hardcoded in
 
 * gcp.dart
-* web/oauth2redirect.html
 
 This would need to be changed in any application.
 
