@@ -58,5 +58,5 @@ The redirect URL is hardcoded in two places
 This would need to be changed in any application.
 
 ## Resources
-[StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa)
-[oauth2_client example](https://pub.dev/packages/oauth2_client/example)
+* [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa)
+* [oauth2_client example](https://pub.dev/packages/oauth2_client/example)
