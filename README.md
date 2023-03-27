@@ -60,3 +60,4 @@ This would need to be changed in any application.
 ## Resources
 * [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa)
 * [oauth2_client example](https://pub.dev/packages/oauth2_client/example)
+* [flutter/flutter#123485](https://github.com/flutter/flutter/issues/123485) Update flutter and dart to use Auth Code Flow with PKCE
