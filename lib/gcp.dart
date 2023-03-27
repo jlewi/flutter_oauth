@@ -14,11 +14,14 @@ class Oauth2ClientExample {
   Oauth2ClientExample();
 
   Future<String> fetchTables() async {
+    // Set the redirect URI relative to the location the app is running from.
+    Uri redirect = Uri.base.resolve('/assets/oauth2redirect.html');
+    print("Redirect URI: ${redirect.toString()}");
     var hlp = OAuth2Helper(
       GoogleOAuth2Client(
           // TODO(jeremy): How do we use different redirect URIs for different
           // environments.
-          redirectUri: 'http://localhost:8080/assets/oauth2redirect.html',
+          redirectUri: redirect.toString(),
           // customUriScheme appears to be a required field even though we
           // aren't overriding it for our web app.
           customUriScheme: 'http'),

@@ -48,14 +48,6 @@ By extension I don't think the [extension_google_sign_in_as_googleapis_auth](htt
 package is the right flutter package to use when accessing a user's Google Data. As explained in [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa), I think that package uses the implicit flow. However, that 
 package maybe suitable when using Google just to signin to your app (i.e. OIDC). 
 
-## Incorporating Into Your Application 
-
-The redirect URL is hardcoded in
-
-* gcp.dart
-
-This would need to be changed in any application.
-
 ## Resources
 * [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa)
 * [oauth2_client example](https://pub.dev/packages/oauth2_client/example)
