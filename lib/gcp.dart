@@ -37,6 +37,10 @@ class Oauth2ClientExample {
       // We need to request offline access in order to get a refresh token.
       authCodeParams: {
         'access_type': 'offline',
+        // Per: https://stackoverflow.com/questions/53342863/google-oauth-2-refresh-token-is-missing-for-web-app-but-present-for-localhost
+        // Without this we don't get refresh token when running on a URL
+        // other than localhost
+        'prompt': 'consent',
       },
     );
 
