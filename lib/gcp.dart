@@ -15,7 +15,8 @@ class Oauth2ClientExample {
 
   Future<String> fetchTables() async {
     // Set the redirect URI relative to the location the app is running from.
-    Uri redirect = Uri.base.resolve('/assets/oauth2redirect.html');
+    // N.B. The assets path is duplicated see the note in the README.
+    Uri redirect = Uri.base.resolve('/assets/assets/oauth2redirect.html');
     print("Redirect URI: ${redirect.toString()}");
     var hlp = OAuth2Helper(
       GoogleOAuth2Client(

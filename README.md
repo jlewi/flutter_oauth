@@ -48,6 +48,27 @@ By extension I don't think the [extension_google_sign_in_as_googleapis_auth](htt
 package is the right flutter package to use when accessing a user's Google Data. As explained in [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa), I think that package uses the implicit flow. However, that 
 package maybe suitable when using Google just to signin to your app (i.e. OIDC). 
 
+## Asset Serving paths
+
+When you deploy your app the oauth2redirect.html will be served it at
+
+```
+https://${YOURURL}/assets/assets/oauth2redirect.html
+```
+
+That is all assets are placed under the directory `assets` and the path is relative to the root of pubspec.yaml. 
+So in this case because we have assets in an assets directory the URL is duplicated.
+
+This is confusing because when running in debug you can also access the file at
+
+```
+https://localhost/assets/oauth2redirect.html
+```
+
+But this path won't work in production so you should use the former.
+
+For reference see [flutter/flutter#67655](https://github.com/flutter/flutter/issues/67655
+
 ## Resources
 * [StackOverflow Question](https://stackoverflow.com/questions/75835761/how-to-persist-google-api-credentials-in-a-flutter-spa)
 * [oauth2_client example](https://pub.dev/packages/oauth2_client/example)
